@@ -1,0 +1,56 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+            <meta charset="utf-8">
+            <title>Create User</title> 
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link rel="stylesheet" href="jquery.mobile.min.css" /> 
+            <script src="jquery.min.js"></script>
+            <script src="cordova.js"></script>
+            <script src="jquery.mobile.min.js"></script>
+            <script type="text/javascript">
+                
+                var rootURLusers="http://192.168.56.1:8080/PhonegapEx/jaxrs/Dao/CreateUser";
+            
+                function CreateUser(firstName, lastName) {
+                    $.ajax({
+                        type: 'POST',
+                        url: rootURLusers + '/' + firstName + '/' +  lastName ,
+                       	success: function (msg) {
+                        	navigator.notification.alert("Create successfully",alertDismissed, "Result", "Ok");
+                        }
+                    });
+                }
+                function alertDismissed() {}
+
+                
+                document.addEventListener("deviceready", onDeviceReady, false);
+                function onDeviceReady() {
+                    $("#Create").bind("click", function(){
+                        var firstName = $("#first").val()+"";
+                        var lastName = $("#last").val()+"";
+                        CreateUser(firstName, lastName);
+                    });
+                }
+
+            </script>
+
+	</head> 
+        
+        <body> 
+            <div data-role="page" id="signup">
+                <div data-role="header">
+                    <h1>Create User</h1>
+                </div>
+
+                <div data-role="content">
+                    <label>First Name</label>
+                    <input type="text" name="first" id="first"/>
+                    <label>Last Name</label>
+                    <input type="text" name="last" id="last"/>
+                    <a href="#" data-role="button" id="Create">Create User</a>
+                    <a href="Main.html" data-role="button" id="Main" rel="external">Back</a>
+                </div>
+            </div>
+        </body> 
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+            <meta charset="utf-8">
+            <title>Find User</title> 
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link rel="stylesheet" href="jquery.mobile.min.css" /> 
+            <script src="jquery.min.js"></script>
+            <script src="cordova.js"></script>
+            <script src="jquery.mobile.min.js"></script>
+            <script type="text/javascript">
+                
+                var rootURLusers="http://192.168.56.1:8080/PhonegapEx/jaxrs/Dao/getUserById";
+            
+                function findById(id) {
+                    $.ajax({
+                        type: 'GET',
+                        url: rootURLusers + '/' + id  ,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        processData: false, async: false,
+                        success: function (msg) {
+                        	$("#contentId").empty();
+                           	$("#contentId").append("id = "+msg.id + "<br>");
+                           	$("#contentId").append("First name = "+msg.firstName + "<br>");
+                           	$("#contentId").append("Last name = "+msg.lastName + "<br>");
+                        }
+                    });
+                }
+                
+                document.addEventListener("deviceready", onDeviceReady, false);
+                function onDeviceReady() {
+                    $("#Lookup").bind("click", function(){
+                        var id = $("#userid").val()+"";
+                        findById(id);
+                    });
+                }
+
+            </script>
+
+	</head> 
+        
+        <body> 
+            <div data-role="page" id="signup">
+                <div data-role="header">
+                    <h1>Find User</h1>
+                </div>
+
+                <div data-role="content">
+                    <input type="text" name="userid" id="userid"/>
+                    <a href="#" data-role="button" id="Lookup">Look up</a>
+                    <a href="Main.html" data-role="button" id="Main" rel="external">Back</a>
+                    <div id="contentId"></div>
+                </div>
+            </div>
+        </body> 
+</html>
